@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing game</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+
+<body class="bg-dark text-light">
+    <header>
+        <h1 class="text-center">TYPING GAME</h1>
+    </header>
+
+    <main class="container text-center">
+        <div class="mx-auto" style="width: 28rem;">
+            <h2 id="headWord">word</h2>
+            <p id="translation" class="text-break">translation</p>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center text-dark">
+            <div class="card" style="width: 28rem;">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inputWord" autocomplete="off" placeholder="Enter">
+                </div>
+                <div class="d-flex mx-auto mt-2" style="width: 80%;">
+                    <div>
+                        <p>Remaining: <span id="remaining">233</span></p>
+                    </div>
+                    <div class="ms-auto">
+                        <p>round: <span id="round">233</span></p>
+                    </div>
+                </div>
+
+                <div class="d-flex mx-auto flex-column d-none" id="btnBox">
+                    <button class="btn-primary btn-sm">restart</button>
+                    <button class="btn-primary btn-sm mt-2">next</button>
+                </div>
+            </div>
+            <div class="card mt-5">
+                <div class="card-body text-dark">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, libero!</p>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo, maiores!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
