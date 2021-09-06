@@ -31,6 +31,21 @@ function showWord() {
         msg += `${wordArr[showWordNum].content.word.content.trans[index].pos}: ${wordArr[showWordNum].content.word.content.trans[index].tranCn} <br>`;
     }
     document.querySelector('#translation').innerHTML = msg;
+    const sentenceFather = document.querySelector("#sentenceFather");
+
+    if (wordArr[showWordNum].content.word.content.sentence != undefined) {
+        let sentencesMSG = "";
+        for (let index = 0; index < wordArr[showWordNum].content.word.content.sentence.sentences.length; index++) {
+            sentencesMSG += `${wordArr[showWordNum].content.word.content.sentence.sentences[index].sContent} <br>
+            ${wordArr[showWordNum].content.word.content.sentence.sentences[index].sCn} <br>`;
+            console.log(sentencesMSG);
+        }
+        sentenceFather.classList.remove('d-none');
+        document.querySelector('#sentence').innerHTML = sentencesMSG;
+    } else {
+        console.log("is null");
+        sentenceFather.classList.add('d-none');
+    }
 }
 
 const inputWord = document.querySelector('#inputWord');
@@ -45,7 +60,6 @@ inputWord.addEventListener('keydown', function (e) {
             } else {
                 console.log("yes");
                 inputWord.value = "";
-
                 showWordNum++;
                 remaining.textContent = roundNum - showWordNum;
                 showWord();
