@@ -2,7 +2,7 @@ let wordArr = [];
 let showWordNum = 0;
 
 let round = 1;
-const val = 3;
+const val = 30;
 let roundNum = val * round;
 
 this.onload = function () {
@@ -22,6 +22,7 @@ this.onload = function () {
     }
     request.send();
 }
+
 function showWord() {
     remaining.textContent = roundNum - showWordNum;
 
@@ -38,18 +39,19 @@ function showWord() {
         for (let index = 0; index < wordArr[showWordNum].content.word.content.sentence.sentences.length; index++) {
             sentencesMSG += `${wordArr[showWordNum].content.word.content.sentence.sentences[index].sContent} <br>
             ${wordArr[showWordNum].content.word.content.sentence.sentences[index].sCn} <br>`;
-            console.log(sentencesMSG);
         }
         sentenceFather.classList.remove('d-none');
         document.querySelector('#sentence').innerHTML = sentencesMSG;
     } else {
-        console.log("is null");
         sentenceFather.classList.add('d-none');
     }
 }
 
 const inputWord = document.querySelector('#inputWord');
 const btnBox = document.querySelector('#btnBox');
+const warning = document.querySelector('#warning');
+const inputBox = document.querySelector('#inputBox');
+
 inputWord.addEventListener('keydown', function (e) {
     if (e.code === 'Enter') {
         if (inputWord.value == wordArr[showWordNum].headWord) {
@@ -59,13 +61,11 @@ inputWord.addEventListener('keydown', function (e) {
                 remaining.textContent = roundNum - showWordNum - 1;
             } else {
                 console.log("yes");
-                inputWord.value = "";
-                showWordNum++;
-                remaining.textContent = roundNum - showWordNum;
-                showWord();
+                enterIsTrue();
             }
         } else {
             console.log("you fuck up");
+            enterIsFalse();
         }
     }
 })
@@ -74,17 +74,40 @@ const roundProgress = document.querySelector('#round');
 const remaining = document.querySelector('#remaining');
 roundProgress.textContent = round;
 
+// enter is true
+function enterIsTrue() {
+    warning.classList.add('d-none');
+    inputWord.value = "";
+    showWordNum++;
+    remaining.textContent = roundNum - showWordNum;
+    showWord();
+}
+// enter is false
+function enterIsFalse() {
+    warning.classList.remove('d-none');
+    for (let index = 0; index <+ 6; index++) {
+        setTimeout(transform, 100 * index, ((index % 2) * 2 - 1) * 20);
+        setTimeout(transform, 100 * 6, 0, 0);
+    }
+}
+
+// restart and next button
 const restartBtn = btnBox.querySelectorAll('button')[0];
 const nextBtn = btnBox.querySelectorAll('button')[1];
-
 restartBtn.addEventListener('click', function () {
+    restart();
+})
+nextBtn.addEventListener('click', function () {
+    next();
+})
+function restart() {
     showWordNum = roundNum - val;
     showWord();
     btnBox.classList.add('d-none');
     inputWord.disabled = false;
     inputWord.value = "";
-})
-nextBtn.addEventListener('click', function () {
+}
+function next() {
     inputWord.disabled = false;
     round++;
     showWordNum++;
@@ -93,4 +116,8 @@ nextBtn.addEventListener('click', function () {
     inputWord.value = "";
     btnBox.classList.add('d-none');
     showWord();
-})
+}
+
+function transform(x) {
+    inputBox.style.transform = `translateX(${x}px)`
+}

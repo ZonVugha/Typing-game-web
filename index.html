@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing game</title>
-    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="shortcut icon" href="keyboardIcon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="bg-dark text-light">
@@ -20,16 +23,19 @@
             <p id="translation" class="text-break">translation</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-center text-dark">
-            <div class="card" style="width: 28rem;">
+            <div class="card" id="inputBox" >
                 <div class="input-group">
                     <input type="text" class="form-control" id="inputWord" autocomplete="off" placeholder="Enter">
                 </div>
+                <div class="mt-2 d-none border-bottom" id="warning">
+                    <p class="text-danger">INPUT ERROR!!!</p>
+                </div>
                 <div class="d-flex mx-auto mt-2" style="width: 80%;">
                     <div>
-                        <p>Remaining: <span id="remaining">233</span></p>
+                        <p>Remaining: <span id="remaining">30</span></p>
                     </div>
                     <div class="ms-auto">
-                        <p>round: <span id="round">233</span></p>
+                        <p>round: <span id="round">1</span></p>
                     </div>
                 </div>
 
