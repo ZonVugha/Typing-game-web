@@ -1,4 +1,4 @@
 #inputBox{
-    width: 28rem;
+    min-width: 28vw;
     transition: transform 0.1s ease-in-out;
 }

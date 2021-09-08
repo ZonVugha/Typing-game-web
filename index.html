@@ -18,8 +18,9 @@
     </header>
 
     <main class="container text-center">
-        <div class="mx-auto" style="width: 28rem;">
+        <div class="mx-auto" >
             <h2 id="headWord">word</h2>
+            <p><span>UK <i class="bi bi-volume-up" id="ukPhone">ukPhone</i></span> <span class="ms-2">US <i class="bi bi-volume-up" id="usPhone">usPhone</i></span></p>
             <p id="translation" class="text-break">translation</p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-center text-dark">
@@ -27,32 +28,33 @@
                 <div class="input-group">
                     <input type="text" class="form-control" id="inputWord" autocomplete="off" placeholder="Enter">
                 </div>
-                <div class="mt-2 d-none border-bottom" id="warning">
-                    <p class="text-danger">INPUT ERROR!!!</p>
+                <div class="mt-1 d-none border-bottom" id="warning">
+                    <p class="text-danger my-auto">INPUT ERROR!!!</p>
                 </div>
-                <div class="d-flex mx-auto mt-2" style="width: 80%;">
-                    <div>
+                <div class="d-flex mx-auto mt-2" style="width: 90%;">
+                    <div class="">
                         <p>Remaining: <span id="remaining">30</span></p>
                     </div>
                     <div class="ms-auto">
                         <p>round: <span id="round">1</span></p>
                     </div>
                 </div>
-
                 <div class="d-flex mx-auto flex-column d-none" id="btnBox">
                     <button class="btn-primary btn-sm">restart</button>
                     <button class="btn-primary btn-sm mt-2">next</button>
                 </div>
             </div>
-            <div class="card mt-5 d-none" id="sentenceFather">
+            <div class="card mt-3 d-none" id="sentenceFather">
                 <div class="card-body text-dark" id="sentence">
 
                 </div>
             </div>
         </div>
     </main>
-    <script src="script.js"></script>
+    <video id="UKAudio" class="d-none" controls="" name="media"><source id="youdaoUKPhone" src="" type="audio/mpeg"></video>
+    <video id="USAudio" class="d-none" controls="" name="media"><source id="youdaoUSPhone" src="" type="audio/mpeg"></video>
 
+    <script src="script.js"></script>
 </body>
 
 </html>
