@@ -20,7 +20,6 @@ this.onload = function () {
             console.log(wordArr);
             showWord();
         }
-
     }
     request.send();
 }
@@ -33,6 +32,8 @@ function showWord() {
     usPhone.textContent = wordArr[showWordNum].content.word.content.usphone;
 
     document.querySelector('#headWord').textContent = wordArr[showWordNum].headWord;
+
+    document.querySelector('#autoAudioBox').innerHTML = autoPhone(wordArr[showWordNum].headWord);
     let msg = "";
     for (let index = 0; index < wordArr[showWordNum].content.word.content.trans.length; index++) {
         msg += `${wordArr[showWordNum].content.word.content.trans[index].pos}: ${wordArr[showWordNum].content.word.content.trans[index].tranCn} <br>`;
@@ -59,18 +60,16 @@ const warning = document.querySelector('#warning');
 const inputBox = document.querySelector('#inputBox');
 
 inputWord.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-        if (inputWord.value == wordArr[showWordNum].headWord) {
+    if (e.key === 'Enter' || e.code === 'Enter') {
+        if (inputWord.value.toLowerCase() == wordArr[showWordNum].headWord) {
             if (roundNum - showWordNum == 1) {
                 btnBox.classList.remove('d-none');
                 inputWord.disabled = true;
                 remaining.textContent = roundNum - showWordNum - 1;
             } else {
-                console.log("yes");
                 enterIsTrue();
             }
         } else {
-            console.log("no");
             enterIsFalse();
         }
     }
@@ -151,8 +150,20 @@ usPhone.addEventListener('click', function () {
     const youdaoURL = `https://dict.youdao.com/dictvoice?audio=${usSpeech}`;
     const USAudio = document.querySelector('#USAudio');
     const youdaoUSPhone = document.querySelector('#youdaoUSPhone');
-    
+
     youdaoUSPhone.setAttribute('src', youdaoURL);
     USAudio.load();
     USAudio.play();
 });
+
+// auto phone
+function autoPhone(word) {
+    const youdaoURL = `https://dict.youdao.com/dictvoice?audio=${word}`;
+
+    return `
+    <audio autoplay class="d-none" name="media">
+        <source src="${youdaoURL}" type="audio/mpeg">
+    </audio>
+    `;
+}
+

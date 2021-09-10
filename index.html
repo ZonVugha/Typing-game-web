@@ -18,13 +18,19 @@
     </header>
 
     <main class="container text-center">
-        <div class="mx-auto" >
-            <h2 id="headWord">word</h2>
-            <p><span>UK <i class="bi bi-volume-up" id="ukPhone">ukPhone</i></span> <span class="ms-2">US <i class="bi bi-volume-up" id="usPhone">usPhone</i></span></p>
-            <p id="translation" class="text-break">translation</p>
+        <div class="mx-auto">
+            <h2 id="headWord">beddings</h2>
+            <p><span>UK <i class="bi bi-volume-up" id="ukPhone">'bedɪŋ</i></span> <span class="ms-2">US <i
+                        class="bi bi-volume-up" id="usPhone">'bɛdɪŋ</i></span></p>
+            <p id="translation" class="text-break">
+                n: 寝具；（建筑）[建] 基床；（家畜）草垫<br>
+                adj: 适于花坛种植的<br>
+                vt: 把…栽入苗床（bed的ing形式）<br>
+                vi: 睡（bed的ing形式）
+            </p>
         </div>
         <div class="d-flex flex-column align-items-center justify-content-center text-dark">
-            <div class="card" id="inputBox" >
+            <div class="card" id="inputBox">
                 <div class="input-group">
                     <input type="text" class="form-control" id="inputWord" autocomplete="off" placeholder="Enter">
                 </div>
@@ -51,9 +57,15 @@
             </div>
         </div>
     </main>
-    <video id="UKAudio" class="d-none" controls="" name="media"><source id="youdaoUKPhone" src="" type="audio/mpeg"></video>
-    <video id="USAudio" class="d-none" controls="" name="media"><source id="youdaoUSPhone" src="" type="audio/mpeg"></video>
-
+    
+    <div id="autoAudioBox" class="d-none">
+    </div>
+    <video id="UKAudio" class="" name="media">
+        <source id="youdaoUKPhone" src="" type="audio/mpeg">
+    </video>
+    <video id="USAudio" class="d-none" name="media">
+        <source id="youdaoUSPhone" src="" type="audio/mpeg">
+    </video>
     <script src="script.js"></script>
 </body>
 
