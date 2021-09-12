@@ -14,7 +14,50 @@
 
 <body class="bg-dark text-light">
     <header>
-        <h1 class="text-center">TYPING GAME</h1>
+        <nav class="navbar navbar-dark bg-dark sticky-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <h3>TYPING GAME</h3>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                    aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">TYPING GAME</h5>
+                        <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <p>单词本</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="offcanvas-footer">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item d-flex">
+                                <p>自动发音</p>
+                                <div class="switchToggle toggleAuto ms-auto">
+                                    <input type="checkbox" id="switchAuto" checked>
+                                    <label for="switchAuto">自动发音</label>
+                                </div>
+                            </li>
+                            <li class="nav-item d-flex">
+                                <p>发音方式</p>
+                                <div class="toggleStyle ms-auto">
+                                    <input type="checkbox" id="switchStyle">
+                                    <label for="switchStyle">发音方式</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main class="container text-center">
@@ -57,7 +100,6 @@
             </div>
         </div>
     </main>
-    
     <div id="autoAudioBox" class="d-none">
     </div>
     <video id="UKAudio" class="" name="media">
@@ -67,6 +109,9 @@
         <source id="youdaoUSPhone" src="" type="audio/mpeg">
     </video>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -8,7 +8,7 @@ let ukSpeech = "";
 let usSpeech = "";
 
 this.onload = function () {
-    const url = "GaoZhongluan_2.json";
+    const url = "book/GaoZhongluan_2.json";
     const request = new XMLHttpRequest();
     request.open('get', url, true);
     request.onload = function () {
@@ -33,7 +33,7 @@ function showWord() {
 
     document.querySelector('#headWord').textContent = wordArr[showWordNum].headWord;
 
-    document.querySelector('#autoAudioBox').innerHTML = autoPhone(wordArr[showWordNum].headWord);
+    getAutoSpeech();
     let msg = "";
     for (let index = 0; index < wordArr[showWordNum].content.word.content.trans.length; index++) {
         msg += `${wordArr[showWordNum].content.word.content.trans[index].pos}: ${wordArr[showWordNum].content.word.content.trans[index].tranCn} <br>`;
@@ -132,8 +132,6 @@ const usPhone = document.querySelector('#usPhone');
 
 // UK Phone
 ukPhone.addEventListener('click', function () {
-    console.log(ukSpeech);
-
     const youdaoURL = `https://dict.youdao.com/dictvoice?audio=${ukSpeech}`;
     const UKAudio = document.querySelector('#UKAudio');
     const youdaoUKPhone = document.querySelector('#youdaoUKPhone');
@@ -145,8 +143,6 @@ ukPhone.addEventListener('click', function () {
 
 //US phone
 usPhone.addEventListener('click', function () {
-    console.log(usSpeech);
-
     const youdaoURL = `https://dict.youdao.com/dictvoice?audio=${usSpeech}`;
     const USAudio = document.querySelector('#USAudio');
     const youdaoUSPhone = document.querySelector('#youdaoUSPhone');
@@ -156,14 +152,27 @@ usPhone.addEventListener('click', function () {
     USAudio.play();
 });
 
-// auto phone
-function autoPhone(word) {
+// autoSpeech
+function autoSpeech(word) {
     const youdaoURL = `https://dict.youdao.com/dictvoice?audio=${word}`;
 
     return `
-    <audio autoplay class="d-none" name="media">
+    <audio autoplay id="autoAudio" class="d-none" name="media">
         <source src="${youdaoURL}" type="audio/mpeg">
     </audio>
     `;
 }
-
+// open or close autoSpeech and speech style (UK and US default UK)
+const switchAuto = document.querySelector('#switchAuto');
+const switchStyle = document.querySelector('#switchStyle');
+function getAutoSpeech() {
+    if (switchAuto.checked) {
+        if (switchStyle.checked) {
+            document.querySelector('#autoAudioBox').innerHTML = autoSpeech(usSpeech);            
+        } else {
+            document.querySelector('#autoAudioBox').innerHTML = autoSpeech(ukSpeech);            
+        }
+    } else {
+        document.querySelector('#autoAudioBox').innerHTML=""
+    }    
+}
