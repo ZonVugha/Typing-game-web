@@ -7,10 +7,21 @@ let roundNum = val * round;
 let ukSpeech = "";
 let usSpeech = "";
 
+const bookNameArr = [
+    'book/gaozhongluan_2.json',
+    'book/CET4luan_2.json',
+    'book/CET6_2.json',
+    'book/IELTSluan_2.json',
+    'book/TOEFL_2.json'
+]
+
+let bookURL = bookNameArr[0];
+
+bookURL = bookNameArr[localStorage.getItem('bookID')];
 this.onload = function () {
-    const url = "book/GaoZhongluan_2.json";
+    // const url = "book/GaoZhongluan_2.json";
     const request = new XMLHttpRequest();
-    request.open('get', url, true);
+    request.open('get', bookURL, true);
     request.onload = function () {
         if (this.status == 200) {
             let obj = JSON.parse(this.responseText);
@@ -27,7 +38,6 @@ function showWord() {
     remaining.textContent = roundNum - showWordNum;
     ukSpeech = wordArr[showWordNum].content.word.content.ukspeech;
     usSpeech = wordArr[showWordNum].content.word.content.usspeech;
-
     ukPhone.textContent = wordArr[showWordNum].content.word.content.ukphone;
     usPhone.textContent = wordArr[showWordNum].content.word.content.usphone;
 
@@ -175,4 +185,27 @@ function getAutoSpeech() {
     } else {
         document.querySelector('#autoAudioBox').innerHTML=""
     }    
+}
+
+// change bookListContainer icon
+const bookListContainer = document.querySelector('#bookListContainer');
+bookListContainer.addEventListener('click', function () {
+    const iconElement = document.querySelector('#iconElement');
+    iconElement.classList.toggle('touch');
+})
+
+// change vocabulary
+const bookList = document.querySelectorAll('#bookList>a');
+
+for (let index = 0; index < bookList.length; index++) {
+    const element = bookList[index];
+
+    bookList[localStorage.getItem('bookID')].classList.add('active');
+    
+    element.addEventListener('click', function () {
+        console.log(bookNameArr[element.dataset.id]);
+        localStorage.setItem('bookID', element.dataset.id);
+        
+        location.reload();
+    })
 }
