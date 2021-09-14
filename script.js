@@ -19,7 +19,6 @@ let bookURL = bookNameArr[0];
 
 bookURL = bookNameArr[localStorage.getItem('bookID')];
 this.onload = function () {
-    // const url = "book/GaoZhongluan_2.json";
     const request = new XMLHttpRequest();
     request.open('get', bookURL, true);
     request.onload = function () {
@@ -30,9 +29,17 @@ this.onload = function () {
             }
             console.log(wordArr);
             showWord();
+            showOption();
         }
     }
     request.send();
+}
+function showOption() {
+    let optionEle = "";
+    for (let index = 1; index < Math.ceil(wordArr.length / val)+1; index++) {
+    optionEle+=`<option>${index}</option>`
+    }
+    roundProgress.innerHTML = optionEle;
 }
 function showWord() {
     remaining.textContent = roundNum - showWordNum;
@@ -87,7 +94,8 @@ inputWord.addEventListener('keydown', function (e) {
 
 const roundProgress = document.querySelector('#round');
 const remaining = document.querySelector('#remaining');
-roundProgress.textContent = round;
+// roundProgress.textContent = round;
+roundProgress.value=round;
 
 // enter is true
 function enterIsTrue() {
@@ -127,7 +135,9 @@ function next() {
     round++;
     showWordNum++;
     roundNum = val * round;
-    roundProgress.textContent = round;
+    // roundProgress.textContent = round;
+    roundProgress.value=round;
+
     inputWord.value = "";
     btnBox.classList.add('d-none');
     showWord();
@@ -196,11 +206,12 @@ bookListContainer.addEventListener('click', function () {
 
 // change vocabulary
 const bookList = document.querySelectorAll('#bookList>a');
+const bookListID = bookList[localStorage.getItem('bookID')]
+bookListID.classList.add('active');
 
 for (let index = 0; index < bookList.length; index++) {
     const element = bookList[index];
 
-    bookList[localStorage.getItem('bookID')].classList.add('active');
     
     element.addEventListener('click', function () {
         console.log(bookNameArr[element.dataset.id]);
@@ -208,4 +219,12 @@ for (let index = 0; index < bookList.length; index++) {
         
         location.reload();
     })
+}
+// choose round
+roundProgress.addEventListener('change',chooseRound);
+function chooseRound() {
+    showWordNum = (roundProgress.value - 1) * val;
+    round = roundProgress.value;
+    roundNum = val * round;
+    showWord();
 }
