@@ -141,8 +141,6 @@ function restart() {
     } else {
         showWordNum = roundNum - val;
     }
-    console.log("roundNum"+roundNum);
-    console.log("showWordNum"+showWordNum);
     showWord();
     btnBox.classList.add('d-none');
     inputWord.disabled = false;
@@ -232,9 +230,7 @@ if (localStorage.getItem('bookID')) {
 for (let index = 0; index < bookItem.length; index++) {
     const element = bookItem[index];
     element.addEventListener('click', function () {
-        console.log(bookNameArr[element.dataset.id]);
         localStorage.setItem('bookID', element.dataset.id);
-
         location.reload();
     })
 }
