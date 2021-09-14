@@ -2,7 +2,7 @@ let wordArr = [];
 let showWordNum = 0;
 
 let round = 1;
-const val = 30;
+let val = 30;
 let roundNum = val * round;
 let ukSpeech = "";
 let usSpeech = "";
@@ -17,7 +17,9 @@ const bookNameArr = [
 
 let bookURL = bookNameArr[0];
 
-bookURL = bookNameArr[localStorage.getItem('bookID')];
+if (localStorage.getItem('bookID')) {
+    bookURL = bookNameArr[localStorage.getItem('bookID')];
+}
 this.onload = function () {
     const request = new XMLHttpRequest();
     request.open('get', bookURL, true);
@@ -36,10 +38,15 @@ this.onload = function () {
 }
 function showOption() {
     let optionEle = "";
-    for (let index = 1; index < Math.ceil(wordArr.length / val)+1; index++) {
-    optionEle+=`<option>${index}</option>`
+    for (let index = 1; index < Math.ceil(wordArr.length / val) + 1; index++) {
+        optionEle += `<option>${index}</option>`
     }
     roundProgress.innerHTML = optionEle;
+}
+function showRemaining() {
+    if (wordArr.length - (roundProgress.value - 1) * val < val) {
+        roundNum = val * (round - 1) + wordArr.length - (roundProgress.value - 1) * val;
+    }
 }
 function showWord() {
     remaining.textContent = roundNum - showWordNum;
@@ -78,8 +85,13 @@ const inputBox = document.querySelector('#inputBox');
 
 inputWord.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.code === 'Enter') {
-        if (inputWord.value.toLowerCase() == wordArr[showWordNum].headWord) {
+        if (inputWord.value.toLowerCase() == wordArr[showWordNum].headWord.toLowerCase()) {
             if (roundNum - showWordNum == 1) {
+                if (wordArr.length - (roundProgress.value - 1) * val < val) {
+                    document.querySelector('#nextBtn').classList.add('d-none');
+                } else {
+                    document.querySelector('#nextBtn').classList.remove('d-none');
+                }
                 btnBox.classList.remove('d-none');
                 inputWord.disabled = true;
                 remaining.textContent = roundNum - showWordNum - 1;
@@ -94,15 +106,14 @@ inputWord.addEventListener('keydown', function (e) {
 
 const roundProgress = document.querySelector('#round');
 const remaining = document.querySelector('#remaining');
-// roundProgress.textContent = round;
-roundProgress.value=round;
-
+roundProgress.value = round;
 // enter is true
 function enterIsTrue() {
     warning.classList.add('d-none');
     inputWord.value = "";
     showWordNum++;
     remaining.textContent = roundNum - showWordNum;
+    showRemaining();
     showWord();
 }
 // enter is false
@@ -124,7 +135,14 @@ nextBtn.addEventListener('click', function () {
     next();
 })
 function restart() {
-    showWordNum = roundNum - val;
+    if (wordArr.length - (roundProgress.value - 1) * val < val) {
+        roundNum = val * (round - 1) + wordArr.length - (roundProgress.value - 1) * val;
+        showWordNum = val * (round - 1);
+    } else {
+        showWordNum = roundNum - val;
+    }
+    console.log("roundNum"+roundNum);
+    console.log("showWordNum"+showWordNum);
     showWord();
     btnBox.classList.add('d-none');
     inputWord.disabled = false;
@@ -135,11 +153,10 @@ function next() {
     round++;
     showWordNum++;
     roundNum = val * round;
-    // roundProgress.textContent = round;
-    roundProgress.value=round;
-
+    roundProgress.value = round;
     inputWord.value = "";
     btnBox.classList.add('d-none');
+    showRemaining()
     showWord();
 }
 
@@ -188,13 +205,13 @@ const switchStyle = document.querySelector('#switchStyle');
 function getAutoSpeech() {
     if (switchAuto.checked) {
         if (switchStyle.checked) {
-            document.querySelector('#autoAudioBox').innerHTML = autoSpeech(usSpeech);            
+            document.querySelector('#autoAudioBox').innerHTML = autoSpeech(usSpeech);
         } else {
-            document.querySelector('#autoAudioBox').innerHTML = autoSpeech(ukSpeech);            
+            document.querySelector('#autoAudioBox').innerHTML = autoSpeech(ukSpeech);
         }
     } else {
-        document.querySelector('#autoAudioBox').innerHTML=""
-    }    
+        document.querySelector('#autoAudioBox').innerHTML = ""
+    }
 }
 
 // change bookListContainer icon
@@ -206,25 +223,30 @@ bookListContainer.addEventListener('click', function () {
 
 // change vocabulary
 const bookItem = document.querySelectorAll('.bookItem');
-const bookListID = bookItem[localStorage.getItem('bookID')]
-bookListID.classList.add('active');
+if (localStorage.getItem('bookID')) {
+    bookItem[localStorage.getItem('bookID')].classList.add('active');
+} else {
+    bookItem[0].classList.add('active');
+}
 
 for (let index = 0; index < bookItem.length; index++) {
     const element = bookItem[index];
-
-    
     element.addEventListener('click', function () {
         console.log(bookNameArr[element.dataset.id]);
         localStorage.setItem('bookID', element.dataset.id);
-        
+
         location.reload();
     })
 }
 // choose round
-roundProgress.addEventListener('change',chooseRound);
+roundProgress.addEventListener('change', chooseRound);
 function chooseRound() {
     showWordNum = (roundProgress.value - 1) * val;
     round = roundProgress.value;
     roundNum = val * round;
+    inputWord.disabled = false;
+    inputWord.value = "";
+    btnBox.classList.add('d-none');
+    showRemaining();
     showWord();
 }
