@@ -205,12 +205,12 @@ bookListContainer.addEventListener('click', function () {
 })
 
 // change vocabulary
-const bookList = document.querySelectorAll('#bookList>a');
-const bookListID = bookList[localStorage.getItem('bookID')]
+const bookItem = document.querySelectorAll('.bookItem');
+const bookListID = bookItem[localStorage.getItem('bookID')]
 bookListID.classList.add('active');
 
-for (let index = 0; index < bookList.length; index++) {
-    const element = bookList[index];
+for (let index = 0; index < bookItem.length; index++) {
+    const element = bookItem[index];
 
     
     element.addEventListener('click', function () {
