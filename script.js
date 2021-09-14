@@ -8,7 +8,7 @@ let ukSpeech = "";
 let usSpeech = "";
 
 const bookNameArr = [
-    'book/gaozhongluan_2.json',
+    'book/GaoZhongluan_2.json',
     'book/CET4luan_2.json',
     'book/CET6_2.json',
     'book/IELTSluan_2.json',
