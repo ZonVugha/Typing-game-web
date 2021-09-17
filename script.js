@@ -68,11 +68,11 @@ function showWord() {
     if (wordArr[showWordNum].content.word.content.sentence != undefined) {
         let sentencesMSG = "";
         for (let index = 0; index < wordArr[showWordNum].content.word.content.sentence.sentences.length; index++) {
-            sentencesMSG += `${wordArr[showWordNum].content.word.content.sentence.sentences[index].sContent} <br>
-            ${wordArr[showWordNum].content.word.content.sentence.sentences[index].sCn} <br>`;
+            sentencesMSG += `${wordArr[showWordNum].content.word.content.sentence.sentences[index].sContent} <br> 
+            ${wordArr[showWordNum].content.word.content.sentence.sentences[index].sCn} <br> `;
         }
         sentenceFather.classList.remove('d-none');
-        document.querySelector('#sentence').innerHTML = sentencesMSG;
+        document.querySelector('#sentence').innerHTML =sendMsg(sentencesMSG, wordArr[showWordNum].headWord);
     } else {
         sentenceFather.classList.add('d-none');
     }
@@ -245,4 +245,11 @@ function chooseRound() {
     btnBox.classList.add('d-none');
     showRemaining();
     showWord();
+}
+// sentence keyword highlight
+function sendMsg(str, keyword) {
+    const getWord = new RegExp(`${keyword}`);
+    return str.split(' ').map(ele => 
+        getWord.test(ele.toLowerCase()) ? `<span class="highLight">${ele}</span>` : ele
+    ).join(' ');
 }
