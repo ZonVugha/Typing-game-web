@@ -21,20 +21,16 @@ if (localStorage.getItem('bookID')) {
     bookURL = bookNameArr[localStorage.getItem('bookID')];
 }
 this.onload = function () {
-    const request = new XMLHttpRequest();
-    request.open('get', bookURL, true);
-    request.onload = function () {
-        if (this.status == 200) {
-            let obj = JSON.parse(this.responseText);
-            for (let index = 0; index < obj.length; index++) {
-                wordArr.push(obj[index]);
+    fetch(bookURL)
+        .then(res => res.json())
+        .then(data => {
+            for (let index = 0; index < data.length; index++) {
+                wordArr.push(data[index]);
             }
-            console.log(wordArr);
             showWord();
             showOption();
-        }
-    }
-    request.send();
+
+        })
 }
 function showOption() {
     let optionEle = "";
@@ -72,7 +68,7 @@ function showWord() {
             ${wordArr[showWordNum].content.word.content.sentence.sentences[index].sCn} <br> `;
         }
         sentenceFather.classList.remove('d-none');
-        document.querySelector('#sentence').innerHTML =sendMsg(sentencesMSG, wordArr[showWordNum].headWord);
+        document.querySelector('#sentence').innerHTML = sendMsg(sentencesMSG, wordArr[showWordNum].headWord);
     } else {
         sentenceFather.classList.add('d-none');
     }
@@ -249,7 +245,7 @@ function chooseRound() {
 // sentence keyword highlight
 function sendMsg(str, keyword) {
     const getWord = new RegExp(`${keyword}`);
-    return str.split(' ').map(ele => 
+    return str.split(' ').map(ele =>
         getWord.test(ele.toLowerCase()) ? `<span class="highLight">${ele}</span>` : ele
     ).join(' ');
 }
